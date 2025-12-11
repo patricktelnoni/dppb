@@ -23,6 +23,12 @@ Future<List<Product>> getProductList() async {
       daftarProduct.add(Product.fromJson(data));
     }
   }
+  else if(response.statusCode == 401){
+    throw Exception('Unauthorized');
+  }
+  else{
+    throw Exception("Failed to load data");
+  }
   print(daftarProduct.length);
   return daftarProduct;
 }

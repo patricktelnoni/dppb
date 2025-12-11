@@ -40,8 +40,11 @@ class _GetDataHttpState extends State<GetDataHttp> {
                     );
                   },
               );
-            }else{
+            }else if(snapshot.connectionState == ConnectionState.waiting){
               return CircularProgressIndicator();
+            }
+            else{
+              return Text("Kesalahan ketika mengambil data");
             }
           })
     );

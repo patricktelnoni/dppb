@@ -1,6 +1,6 @@
-import 'Product.dart';
+import 'data/Product.dart';
 import 'package:flutter/material.dart';
-import 'package:dppb/service/http_call.dart';
+import 'package:dppb/service/product_http.dart';
 
 class GetDataHttp extends StatefulWidget {
   const GetDataHttp({super.key});

@@ -3,11 +3,18 @@ import 'package:flutter/material.dart';
 import 'pagedua.dart';
 import 'pagetiga.dart';
 import 'package:flutter_rating/flutter_rating.dart';
-import 'get_data_http.dart';
-import 'auth/login_form.dart';
+import 'view/products/get_data_http.dart';
+import 'package:dppb/view/auth/login_form.dart';
+import 'package:provider/provider.dart';
+import 'package:dppb/service/auth_http.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+        create: (context) => AuthService()..isUserLoggedIn(),
+      child: const MyApp()
+  )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -107,12 +114,22 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 child: Text("halaman 3")
             ),
-            TextButton(
-                onPressed: (){
-                  Navigator.pushNamed(context,
-                      '/http');
-                },
-                child: Text("Halaman http")
+            Consumer<AuthService>(
+                builder: (context, auth, child){
+                  if(auth.isLoggedIn){
+                    return TextButton(
+                        onPressed: (){
+                          Navigator.pushNamed(context,
+                              '/http');
+                        },
+                        child: Text("Halaman http")
+                    );
+                  }
+                  else{
+                    return Text("Not accessible");
+
+                  }
+                }
             ),
             TextButton(
                 onPressed: (){

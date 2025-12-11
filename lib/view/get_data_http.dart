@@ -1,4 +1,4 @@
-import 'data/Product.dart';
+import '../data/Product.dart';
 import 'package:flutter/material.dart';
 import 'package:dppb/service/product_http.dart';
 

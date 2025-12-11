@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'pagedua.dart';
 import 'pagetiga.dart';
 import 'package:flutter_rating/flutter_rating.dart';
-import 'get_data_http.dart';
+import 'view/get_data_http.dart';
 import 'auth/login_form.dart';
 
 void main() {

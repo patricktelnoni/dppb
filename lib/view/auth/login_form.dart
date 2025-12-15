@@ -1,7 +1,9 @@
+import 'package:dppb/main.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:dppb/service/auth_http.dart';
+import 'package:provider/provider.dart';
 
 
 class LoginForm extends StatelessWidget {
@@ -37,7 +39,10 @@ class LoginForm extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () async {
-                await AuthService().login(email.text, password.text);
+                var authService = context.read<AuthService>();
+                if(await authService.login(email.text, password.text)){
+                  Navigator.pushNamed(context, '/http');
+                }
               },
               child: Text("Kirim")
           )

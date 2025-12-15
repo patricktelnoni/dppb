@@ -1,18 +1,19 @@
 import 'package:dppb/ScreenArguments.dart';
 import 'package:flutter/material.dart';
-import 'pagedua.dart';
-import 'pagetiga.dart';
+import 'view/pagedua.dart';
+import 'view/pagetiga.dart';
 import 'package:flutter_rating/flutter_rating.dart';
 import 'view/products/get_data_http.dart';
 import 'package:dppb/view/auth/login_form.dart';
 import 'package:provider/provider.dart';
 import 'package:dppb/service/auth_http.dart';
+import 'package:dppb/view/posts/post_list.dart';
 
 void main() {
   runApp(
     ChangeNotifierProvider(
         create: (context) => AuthService()..isUserLoggedIn(),
-      child: const MyApp()
+        child: const MyApp()
   )
   );
 }
@@ -34,6 +35,7 @@ class MyApp extends StatelessWidget {
         '/second': (context) => const SecondPage(),
         '/third': (context) =>const ThirdPage(),
         '/http':(context) => const GetDataHttp(),
+        '/posts':(context) => const PostList(),
       },
     );
   }
@@ -61,7 +63,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body:  Row(
+      body:  Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
            TextButton(
@@ -101,8 +103,6 @@ class _MyHomePageState extends State<MyHomePage> {
                        );
                      },
                      isDismissible: false);
-
-
                },
                child: Text("halaman 2")
            ),
@@ -116,7 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Consumer<AuthService>(
                 builder: (context, auth, child){
-                  if(auth.isLoggedIn){
+                  if(auth.getLoggedIn){
                     return TextButton(
                         onPressed: (){
                           Navigator.pushNamed(context,
@@ -138,6 +138,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 },
                 child: Text("Halaman login")
             ),
+            TextButton(onPressed: (){
+              Navigator.pushNamed(context,
+                  '/posts');
+            },
+                child: Text("Halaman Post"))
           ],
         ),
 

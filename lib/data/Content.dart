@@ -1,19 +1,16 @@
-class Post{
-
+class Content{
   final String? title;
   final String? body;
 
-  const Post({
-
+  const Content({
     required this.title,
     required this.body,
   });
 
-  factory Post.fromJson(Map<String, dynamic> json) {
-    return Post(
-
+  factory Content.fromJson(Map<String, dynamic> json) {
+    return Content(
       title: json['title'],
-      body: json['body'],
+      body: json['content'],
     );
   }
 }

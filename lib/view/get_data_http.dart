@@ -24,16 +24,17 @@ class _GetDataHttpState extends State<GetDataHttp> {
                return ListView.builder(
                   itemCount: daftarProduct.length,
                   itemBuilder: (BuildContext context, int index){
-                      String foto = daftarProduct[index].foto.toString();
+                    String foto = daftarProduct[index].foto.toString();
                      return Card(
                       margin: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          foto!="null" ? Image.network(foto) : Image.network("https://picsum.photos/640/480?random=94599"),
+                         foto!="null" ? Image.network(foto) : Image.network("https://picsum.photos/640/480?random=94599"),
                           ListTile(
                             leading: Icon(Icons.list),
                             title: Text(daftarProduct[index].name.toString()),
                             subtitle: Text(daftarProduct[index].description.toString()),
+                            trailing: Icon(Icons.arrow_forward),
                           )
                         ],
                       ),

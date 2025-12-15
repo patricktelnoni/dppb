@@ -37,7 +37,7 @@ class LoginForm extends StatelessWidget {
           ),
           ElevatedButton(
               onPressed: () async {
-                await login(email.text, password.text);
+                await AuthService().login(email.text, password.text);
               },
               child: Text("Kirim")
           )

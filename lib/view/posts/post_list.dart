@@ -1,6 +1,9 @@
 import 'package:dppb/data/Content.dart';
+import 'package:dppb/view/comment/comment_list.dart';
 import 'package:flutter/material.dart';
 import 'package:dppb/service/post_http.dart';
+import 'package:dppb/transition/item_transition.dart';
+import 'package:dppb/view/comment/comment_form.dart';
 
 
 class PostList extends StatefulWidget {
@@ -12,6 +15,10 @@ class PostList extends StatefulWidget {
 
 class _PostListState extends State<PostList> {
   List<Content> posts = [];
+  late AnimationController animationController;
+  late Animation<double> animation;
+  bool _visible = false;
+
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +33,11 @@ class _PostListState extends State<PostList> {
                 itemBuilder: (context, index){
                   return Card(
                     margin: const EdgeInsets.all(8.0),
-                    color: Colors.pinkAccent,
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    color: Colors.white70,
                     child:  LayoutBuilder(
                         builder: (context, constraints){
                           return Row(
@@ -34,59 +45,66 @@ class _PostListState extends State<PostList> {
                               Expanded(
                                   child: Container(
                                     margin: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("${posts[index].title}",
-                                          overflow: TextOverflow.fade,
+                                    child: GestureDetector(
+                                      onTap: () async => await Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => CommentList(postId: posts[index].id))),
+                                      child: Column(
 
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w900,
-                                              fontSize:18
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text("${posts[index].title}",
+                                            overflow: TextOverflow.fade,
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w900,
+                                                fontSize:18
+                                            ),
                                           ),
-                                        ),
-                                        Text(
+                                          Text(
                                             "${posts[index].body}",
-                                          overflow: TextOverflow.fade,
-                                          style: TextStyle(
-                                            fontWeight: FontWeight.w500,
+                                            overflow: TextOverflow.fade,
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.w500,
+                                            ),
                                           ),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                          children: [
-                                            ElevatedButton(
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                            children: [
+                                              ElevatedButton(
                                                 onPressed: (){
                                                   print("Nunggu likenya kaka");
                                                 },
                                                 child: Icon(Icons.star, color: Colors.amberAccent),
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.grey, // Button background color
-                                                foregroundColor: Colors.white, // Text/icon color
-                                                shadowColor: Colors.lightBlue, // Shadow color
-                                                elevation: 10, // Button elevation
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.transparent, // Button background color
+                                                  foregroundColor: Colors.transparent, // Text/icon color
+                                                  shadowColor: Colors.transparent, // Shadow color
+                                                  elevation: 10, // Button elevation
+                                                ),
                                               ),
-                                            ),
-                                            ElevatedButton(
+                                              ElevatedButton(
                                                 onPressed: (){
-                                                  print("Nunggu komen");
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context) => CommentForm(postId: posts[index].id)));
                                                 },
                                                 child: Icon(
                                                   Icons.comment,
                                                   color: Colors.amberAccent,
                                                 ),
-                                              style: ElevatedButton.styleFrom(
-                                                backgroundColor: Colors.grey, // Button background color
-                                                foregroundColor: Colors.white, // Text/icon color
-                                                shadowColor: Colors.lightBlue, // Shadow color
-                                                elevation: 10, // Button elevation
-                                              ),
-                                            )
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.transparent, // Button background color
+                                                  foregroundColor: Colors.transparent, // Text/icon color
+                                                  shadowColor: Colors.transparent, // Shadow color
+                                                  elevation: 10, // Button elevation
+                                                ),
+                                              )
 
-                                          ],
-                                        )
-                                      ],
+                                            ],
+                                          ),
+
+                                        ],
+                                      ),
                                     ),
                                   )
                               )

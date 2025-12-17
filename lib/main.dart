@@ -8,6 +8,7 @@ import 'package:dppb/view/auth/login_form.dart';
 import 'package:provider/provider.dart';
 import 'package:dppb/service/auth_http.dart';
 import 'package:dppb/view/posts/post_list.dart';
+import 'package:dppb/view/comment/comment_form.dart';
 
 void main() {
   runApp(
@@ -36,6 +37,7 @@ class MyApp extends StatelessWidget {
         '/third': (context) =>const ThirdPage(),
         '/http':(context) => const GetDataHttp(),
         '/posts':(context) => const PostList(),
+        //'/post-comment':(context) => const CommentForm()
       },
     );
   }
@@ -145,6 +147,15 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Text("Halaman Post"))
           ],
         ),
+      bottomNavigationBar: BottomNavigationBar(
+        showSelectedLabels: true,
+        showUnselectedLabels: true, 
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+            BottomNavigationBarItem(icon: Icon(Icons.timeline), label: 'Post',),
+            BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile')
+          ]
+      ),
 
 
     );

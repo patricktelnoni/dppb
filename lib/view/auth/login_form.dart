@@ -1,21 +1,21 @@
-import 'package:dppb/main.dart';
+
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:dppb/service/auth_http.dart';
 import 'package:provider/provider.dart';
 
-
 class LoginForm extends StatelessWidget {
 
-  LoginForm({super.key});
-
-  final TextEditingController email = TextEditingController();
-  final TextEditingController password = TextEditingController();
-  final storage = FlutterSecureStorage();
+  const LoginForm({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final storage = FlutterSecureStorage();
+
+    TextEditingController email = TextEditingController();
+    TextEditingController password = TextEditingController();
+
     return Scaffold(
       appBar: AppBar(title: Text("Login Form"),),
       body: Column(
@@ -26,8 +26,6 @@ class LoginForm extends StatelessWidget {
               hintText: "Enter your email",
               labelText: "Email",
             ),
-
-
           ),
           TextField(
             controller: password,

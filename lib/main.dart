@@ -8,7 +8,16 @@ import 'package:dppb/view/auth/login_form.dart';
 import 'package:provider/provider.dart';
 import 'package:dppb/service/auth_http.dart';
 import 'package:dppb/view/posts/post_list.dart';
+import 'package:go_router/go_router.dart';
+import 'package:dppb/route/route.dart';
 import 'package:dppb/view/comment/comment_form.dart';
+
+final GoRouter appRouter = GoRouter(
+  routes: <GoRoute>[
+    ...routes, // Use the spread operator to add all routes from the list
+  ],
+  initialLocation: '/',
+);
 
 void main() {
   runApp(
@@ -24,21 +33,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routerConfig: appRouter,
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueAccent),
       ),
-      home: const MyHomePage(title: "Contoh Layout"),
-      initialRoute: '/',
-      routes: {
-        '/login' : (context) => LoginForm(),
-        '/second': (context) => const SecondPage(),
-        '/third': (context) =>const ThirdPage(),
-        '/http':(context) => const GetDataHttp(),
-        '/posts':(context) => const PostList(),
-        //'/post-comment':(context) => const CommentForm()
-      },
+
     );
   }
 }
@@ -56,6 +57,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   double rating = 3.5;
   int starCount = 5;
+  int _selectedIndex = 0;
+
+  final List<Widget> _screens = [
+    Center(child: Text('Home Screen')),
+    Center(child: Text('Search Screen')),
+    Center(child: Text('Profile Screen')),
+  ];
+
 
   @override
   Widget build(BuildContext context) {
@@ -121,8 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   if(auth.getLoggedIn){
                     return TextButton(
                         onPressed: (){
-                          Navigator.pushNamed(context,
-                              '/http');
+                          context.go('/products');
                         },
                         child: Text("Halaman http")
                     );
@@ -135,19 +143,23 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             TextButton(
                 onPressed: (){
-                  Navigator.pushNamed(context,
-                      '/login');
+                  context.go('/login');
                 },
                 child: Text("Halaman login")
             ),
             TextButton(onPressed: (){
-              Navigator.pushNamed(context,
-                  '/posts');
+              context.go('/posts');
             },
                 child: Text("Halaman Post"))
           ],
         ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: (index){
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
         showSelectedLabels: true,
         showUnselectedLabels: true, 
           items: const <BottomNavigationBarItem>[

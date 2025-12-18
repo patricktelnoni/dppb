@@ -1,4 +1,5 @@
 import 'package:dppb/main.dart';
+import 'package:dppb/view/home/dashboard.dart';
 import 'package:dppb/view/posts/post_list.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -22,20 +23,7 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: '/',
-              builder: (context, state) => Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                   TextButton(
-                      onPressed: (){
-                        context.go('/products');
-                      },
-                      child: const Text("Halaman http"),
-                  ),
-                  TextButton(onPressed: (){
-                    context.go('/posts');
-                  }, child: Text("Halaman Post"))
-                ],
-              ),
+              builder: (context, state) => const Dashboard(),
             ),
           ],
         ),

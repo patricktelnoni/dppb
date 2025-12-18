@@ -13,8 +13,9 @@ class _StarButtonState extends State<StarButton> {
 
   Icon get icon {
     final IconData iconData = state ? Icons.star : Icons.star_outline;
+    final Color iconColor = state ? Colors.amber : Colors.grey;
 
-    return Icon(iconData, color: Colors.grey, size: 20);
+    return Icon(iconData, color: iconColor, size: 24);
   }
 
   void _toggle() {
@@ -31,12 +32,14 @@ class _StarButtonState extends State<StarButton> {
       turns: turns,
       curve: Curves.decelerate,
       duration: const Duration(milliseconds: 300),
-      child: FloatingActionButton(
-        elevation: 0,
-        shape: const CircleBorder(),
-        backgroundColor: _colorScheme.surface,
+      child: IconButton( // Changed to IconButton for better touch target and standard look
+        icon: icon,
         onPressed: () => _toggle(),
-        child: Padding(padding: const EdgeInsets.all(10.0), child: icon),
+        style: IconButton.styleFrom(
+           backgroundColor: Colors.white,
+           elevation: 2,
+           shadowColor: Colors.black12
+        ),
       ),
     );
   }

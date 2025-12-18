@@ -13,11 +13,7 @@ final List<GoRoute> routes = [
         '/third': (context) =>const ThirdPage(),
         '/http':(context) => const GetDataHttp(),
         '/posts':(context) => const PostList(),*/
-    GoRoute(
-      name: 'home',
-      path: '/',
-      builder: (context, state) => const MyHomePage(title: "Contoh Layout"),
-    ),
+
     GoRoute(
       name: 'Login',
       path: '/login',

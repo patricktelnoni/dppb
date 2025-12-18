@@ -1,0 +1,54 @@
+import 'package:dppb/main.dart';
+import 'package:dppb/view/posts/post_list.dart';
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+
+final _rootNavigatorKey = GlobalKey<NavigatorState>();
+final _sectionANavigatorKey = GlobalKey<NavigatorState>();
+
+final router = GoRouter(
+  navigatorKey: _rootNavigatorKey,
+  initialLocation: '/',
+  routes: [
+    StatefulShellRoute.indexedStack(
+      builder: (context, state, navigationShell) {
+        // Return the widget that implements the custom shell (Navigation Bar)
+        return MyHomePage(navigationShell: navigationShell,);
+      },
+      branches: [
+        // First Tab
+        StatefulShellBranch(
+          navigatorKey: _sectionANavigatorKey,
+          routes: [
+            GoRoute(
+              path: '/',
+              builder: (context, state) => Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                   TextButton(
+                      onPressed: (){
+                        context.go('/products');
+                      },
+                      child: const Text("Halaman http"),
+                  ),
+                  TextButton(onPressed: (){
+                    context.go('/posts');
+                  }, child: Text("Halaman Post"))
+                ],
+              ),
+            ),
+          ],
+        ),
+        // Second Tab
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/post',
+              builder: (context, state) => const PostList(),
+            ),
+          ],
+        ),
+      ],
+    ),
+  ],
+);

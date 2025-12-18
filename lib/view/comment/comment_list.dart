@@ -18,6 +18,7 @@ class _CommentListState extends State<CommentList> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Comments")),
       body: FutureBuilder<List<PostComment>>(
           future: getCommentList(widget.postId!),
           builder: (context, snapshot) {
@@ -35,23 +36,57 @@ class _CommentListState extends State<CommentList> {
                 itemBuilder: (context, index) {
                   final comment = comments[index];
                   return Card(
+                    color: Colors.indigo.shade50,
+                    elevation: 4,
+                    shadowColor: Colors.indigo.withOpacity(0.4),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
                     margin: const EdgeInsets.symmetric(
                         vertical: 8.0, horizontal: 16.0),
                     child: Padding(
-                      padding: const EdgeInsets.all(12.0),
+                      padding: const EdgeInsets.all(16.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text(
-                            comment.title ?? 'Anonymous',
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
+                          Row(
+                            children: [
+                              const CircleAvatar(
+                                backgroundColor: Colors.indigoAccent,
+                                child: Icon(Icons.person, color: Colors.white),
+                              ),
+                              const SizedBox(width: 10),
+                              Expanded(
+                                child: Text(
+                                  comment.title ?? 'Anonymous',
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 16,
+                                    color: Colors.indigo
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          const SizedBox(height: 4.0),
-                          Text(comment.content ?? ''),
-                          const SizedBox(height: 8.0),
-                          Text(comment.author?.name.toString() ?? ''),
+                          const SizedBox(height: 10.0),
+                          Text(
+                             comment.content ?? '',
+                             style: const TextStyle(fontSize: 14, height: 1.4, color: Colors.black87),
+                          ),
+                          const SizedBox(height: 12.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              const Icon(Icons.edit, size: 14, color: Colors.grey),
+                              const SizedBox(width: 4),
+                              Text(
+                                comment.author?.name.toString() ?? '',
+                                style: const TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500
+                                ),
+                              ),
+                            ],
+                          ),
                         ],
                       ),
                     ),

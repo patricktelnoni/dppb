@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 class StarButton extends StatefulWidget {
-  const StarButton({super.key});
+  final Future<bool> Function()? onPressed;
+  
+  const StarButton({super.key, this.onPressed});
 
   @override
   State<StarButton> createState() => _StarButtonState();
@@ -18,10 +20,23 @@ class _StarButtonState extends State<StarButton> {
     return Icon(iconData, color: iconColor, size: 24);
   }
 
-  void _toggle() {
+  Future<void> _toggle() async {
+    // Optimistic update
     setState(() {
       state = !state;
     });
+    
+    if (widget.onPressed != null) {
+      bool success = await widget.onPressed!();
+      if (!success) {
+        // Rollback if failed
+        if (mounted) {
+          setState(() {
+            state = !state;
+          });
+        }
+      }
+    }
   }
 
   double get turns => state ? 1 : 0;

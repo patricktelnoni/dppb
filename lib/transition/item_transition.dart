@@ -11,13 +11,13 @@ class ItemTransition extends StatefulWidget  {
 
 class _ItemTransitionState extends State<ItemTransition> with TickerProviderStateMixin{
   late final AnimationController _controller = AnimationController(
-    duration: const Duration(milliseconds: 500),
+    duration: const Duration(milliseconds: 1000),
     vsync: this,
   );
 
   late final Animation<double> _animation = CurvedAnimation(
     parent: _controller,
-    curve: Curves.fastOutSlowIn,
+    curve: Curves.elasticIn,
   );
 
   @override

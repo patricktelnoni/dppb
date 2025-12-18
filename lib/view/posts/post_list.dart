@@ -3,6 +3,7 @@ import 'package:dppb/view/comment/comment_list.dart';
 import 'package:dppb/widget/star_button.dart';
 import 'package:flutter/material.dart';
 import 'package:dppb/service/post_http.dart';
+import 'package:dppb/service/likes_http.dart';
 import 'package:dppb/transition/item_transition.dart';
 import 'package:dppb/view/comment/comment_form.dart';
 
@@ -81,7 +82,27 @@ class _PostListState extends State<PostList> {
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                                             children: [
-                                              const StarButton(),
+                                              StarButton(
+                                                onPressed: () async {
+                                                  final int statusCode = await hitLike(posts[index].id!);
+                                                  print(posts[index].id!);
+                                                  if (context.mounted) {
+                                                    if (statusCode == 200 || statusCode == 201) {
+
+                                                      ScaffoldMessenger.of(context).showSnackBar(
+                                                        const SnackBar(content: Text('Like success!')),
+                                                      );
+                                                      return true;
+                                                    } else {
+                                                      ScaffoldMessenger.of(context).showSnackBar(
+                                                        SnackBar(content: Text('Failed to like post: $statusCode')),
+                                                      );
+                                                      return false;
+                                                    }
+                                                  }
+                                                  return false;
+                                                },
+                                              ),
                                               ElevatedButton(
                                                 onPressed: (){
                                                   Navigator.push(context,

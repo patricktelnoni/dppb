@@ -39,7 +39,11 @@ class LoginForm extends StatelessWidget {
               onPressed: () async {
                 var authService = context.read<AuthService>();
                 if(await authService.login(email.text, password.text)){
-                  Navigator.pushNamed(context, '/http');
+                  SnackBar snackBar = SnackBar(
+                    content: Text("Login berhasil"),
+                  );
+                  ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                  Navigator.pushNamed(context, '/products');
                 }
               },
               child: Text("Kirim")

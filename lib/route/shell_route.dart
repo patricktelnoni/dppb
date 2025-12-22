@@ -1,4 +1,5 @@
 import 'package:dppb/main.dart';
+import 'package:dppb/view/auth/login_form.dart';
 import 'package:dppb/view/home/dashboard.dart';
 import 'package:dppb/view/posts/post_list.dart';
 import 'package:flutter/material.dart';
@@ -33,6 +34,15 @@ final router = GoRouter(
             GoRoute(
               path: '/post',
               builder: (context, state) => const PostList(),
+            ),
+          ],
+        ),
+        // Third tab
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: '/login',
+              builder: (context, state) => const LoginForm(),
             ),
           ],
         ),

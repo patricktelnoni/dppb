@@ -14,11 +14,11 @@ final List<GoRoute> routes = [
         '/http':(context) => const GetDataHttp(),
         '/posts':(context) => const PostList(),*/
 
-    GoRoute(
-      name: 'Login',
-      path: '/login',
-      builder: (context, state) => const LoginForm(),
-    ),
+    // GoRoute(
+    //   name: 'Login',
+    //   path: '/login',
+    //   builder: (context, state) => const LoginForm(),
+    // ),
     GoRoute(
       name: 'Product',
       path: '/products',

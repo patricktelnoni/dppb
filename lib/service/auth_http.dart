@@ -5,8 +5,12 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class AuthService with ChangeNotifier{
-  bool _isLoggedIn = false;
-  bool get getLoggedIn => _isLoggedIn;
+  bool _isLoggedIn      = false;
+  bool get getLoggedIn  => _isLoggedIn;
+  
+  User? _user;
+  User? get getUser     => _user;
+
   final storage = FlutterSecureStorage();
 
   Future<void> isUserLoggedIn() async{
@@ -17,8 +21,11 @@ class AuthService with ChangeNotifier{
     notifyListeners();
   }
 
-  Future<bool> login(String email, String password) async{
+  Future<void> logout() async{
 
+  }
+  Future<bool> login(String email, String password) async{
+    print('loggginnn');
     final url = Uri.parse("https://palugada.me/api/login");
     final response = await http.post(
       url,
@@ -27,12 +34,15 @@ class AuthService with ChangeNotifier{
       },
       body: jsonEncode({"email": email, "password": password}),
     );
-    //print(response.statusCode);
+    print(response.body);
     if(response.statusCode == 200 || response.statusCode == 201 || response.statusCode == 302){
       Map<String, dynamic> data = jsonDecode(response.body);
       print(data['access_token']);
       await storage.write(key: 'access_token', value: data['access_token']);
+      await storage.write(key: 'user_id', value: data['user_id'].toString());
+      await storage.write(key: 'username', value: data['username']);
       _isLoggedIn = true;
+      _user = User(userId: data['user_id'], name: data['username']);
       notifyListeners();
     }
     return _isLoggedIn;

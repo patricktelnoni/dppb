@@ -7,7 +7,7 @@ import 'package:dppb/route/shell_route.dart'; // Import the router configuration
 void main() {
   runApp(
     ChangeNotifierProvider(
-        create: (context) => AuthService()..isUserLoggedIn(),
+        create: (context) => AuthService(),
         child: const MyApp()
   )
   );
@@ -62,16 +62,26 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text("Halaman utama"),
       ),
       body:  widget.navigationShell,
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: widget.navigationShell.currentIndex,
-        onTap: _goBranch,
-        showSelectedLabels: true,
-        showUnselectedLabels: true, 
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(Icons.timeline), label: 'Post',),
-            // BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile') // Removed Profile as it's not in the shell branches yet
-          ]
+      bottomNavigationBar: Consumer<AuthService>(
+        builder: (context, auth, child){
+          return BottomNavigationBar(
+              currentIndex: widget.navigationShell.currentIndex,
+              onTap: _goBranch,
+              showSelectedLabels: true,
+              showUnselectedLabels: true,
+              items: <BottomNavigationBarItem>[
+                const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+                const BottomNavigationBarItem(icon: Icon(Icons.timeline), label: 'Post',),
+                if(auth.getUser != null)
+                  BottomNavigationBarItem(icon: Icon(Icons.login), label: 'Login',)
+                else
+                   BottomNavigationBarItem(icon: Icon(Icons.logout), label: 'Logout',)
+
+
+
+              ]
+          );
+        },
       ),
     );
   }

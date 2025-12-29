@@ -1,3 +1,4 @@
+import 'package:dppb/viewmodel/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:dppb/service/auth_http.dart';
@@ -7,7 +8,7 @@ import 'package:dppb/route/shell_route.dart'; // Import the router configuration
 void main() {
   runApp(
     ChangeNotifierProvider(
-        create: (context) => AuthService(),
+        create: (context) => AuthViewModel(),
         child: const MyApp()
   )
   );
@@ -59,30 +60,20 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text("Halaman utama"),
+        title: const Text("Halaman utama"),
       ),
       body:  widget.navigationShell,
-      bottomNavigationBar: Consumer<AuthService>(
-        builder: (context, auth, child){
-          return BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
               currentIndex: widget.navigationShell.currentIndex,
               onTap: _goBranch,
               showSelectedLabels: true,
               showUnselectedLabels: true,
-              items: <BottomNavigationBarItem>[
-                const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-                const BottomNavigationBarItem(icon: Icon(Icons.timeline), label: 'Post',),
-                if(auth.getUser != null)
-                  BottomNavigationBarItem(icon: Icon(Icons.login), label: 'Login',)
-                else
-                   BottomNavigationBarItem(icon: Icon(Icons.logout), label: 'Logout',)
-
-
-
+              items: const <BottomNavigationBarItem>[
+                BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+                BottomNavigationBarItem(icon: Icon(Icons.timeline), label: 'Post',),
+                BottomNavigationBarItem(icon: Icon(Icons.login), label: 'Account',)
               ]
-          );
-        },
-      ),
+          ),
     );
   }
 }

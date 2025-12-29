@@ -1,6 +1,7 @@
 import 'package:dppb/data/PostComments.dart';
 import 'package:dppb/data/User.dart';
-import 'package:dppb/service/comment_http.dart';
+import 'package:dppb/viewmodel/auth_view_model.dart';
+import 'package:dppb/viewmodel/comment_view_model.dart';
 import 'package:flutter/material.dart';
 
 class CommentList extends StatefulWidget {
@@ -20,7 +21,7 @@ class _CommentListState extends State<CommentList> {
     return Scaffold(
       appBar: AppBar(title: Text("Comments")),
       body: FutureBuilder<List<PostComment>>(
-          future: getCommentList(widget.postId!),
+          future: CommentViewModel().fetchComments(widget.postId!),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(child: CircularProgressIndicator());

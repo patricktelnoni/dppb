@@ -2,8 +2,10 @@ import 'package:dppb/main.dart';
 import 'package:dppb/view/auth/login_form.dart';
 import 'package:dppb/view/home/dashboard.dart';
 import 'package:dppb/view/posts/post_list.dart';
+import 'package:dppb/viewmodel/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 final _rootNavigatorKey = GlobalKey<NavigatorState>();
 final _sectionANavigatorKey = GlobalKey<NavigatorState>();
@@ -37,11 +39,11 @@ final router = GoRouter(
             ),
           ],
         ),
-        // Third tab
+        // Third Tab
         StatefulShellBranch(
           routes: [
             GoRoute(
-              path: '/login',
+              path: '/account',
               builder: (context, state) => const LoginForm(),
             ),
           ],

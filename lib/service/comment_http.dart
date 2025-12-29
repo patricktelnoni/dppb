@@ -7,35 +7,43 @@ final storage = FlutterSecureStorage();
 
 Future<int> postComment(int postId, String comment) async{
   final url  = Uri.parse("https://palugada.me/api/comments");
+  final token = await storage.read(key: 'access_token');
+  
+  Map<String, String> headers = {
+    'Content-Type': 'application/json',
+  };
+  if (token != null) {
+    headers['Authorization'] = 'Bearer $token';
+  }
+
   final response = await http.post(
     url,
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: headers,
     body: jsonEncode({"title": comment, "content":comment, "user_id":1, "post_id": postId}),
   );
   return response.statusCode;
 
 }
 
-Future<List<PostComment>> getCommentList(int postId) async {
+Future<http.Response> getCommentList(int postId) async {
   final token = await storage.read(key: 'access_token');
-  final List<PostComment> comments = [];
-  final url  = "https://palugada.me/api/posts/$postId/comments/";
-  final response = await http.get(
-    Uri.parse(url),
-    headers: <String, String>{
-      'Accept': 'application/json;',
-      //'Authorization': 'Bearer $token', // Include the token in the header
-    },
-  );
-  print(response.body);
-  if(response.statusCode == 200 || response.statusCode == 201){
-    final list = jsonDecode(response.body);
-    for(var data in list['data']){
-      comments.add(PostComment.fromJson(data));
-    }
+
+  final url  = "https://palugada.me/api/posts/$postId/comments"; // Removed trailing slash
+  
+  Map<String, String> headers = {
+      'Accept': 'application/json',
+  };
+  
+  if (token != null) {
+    headers['Authorization'] = 'Bearer $token';
   }
-  print(comments.length);
-  return comments;
+
+
+    final response = await http.get(
+      Uri.parse(url),
+      headers: headers,
+    );
+    return response;
+
+
 }

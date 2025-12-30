@@ -1,6 +1,4 @@
 import 'package:dppb/data/PostComments.dart';
-import 'package:dppb/data/User.dart';
-import 'package:dppb/viewmodel/auth_view_model.dart';
 import 'package:dppb/viewmodel/comment_view_model.dart';
 import 'package:flutter/material.dart';
 

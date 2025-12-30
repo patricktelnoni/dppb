@@ -37,10 +37,13 @@ class AuthViewModel extends ChangeNotifier{
   }
 
   Future<void> logout() async{
-    await storage.deleteAll();
-    _isLoggedIn = false;
-    _user = null;
-    notifyListeners();
+    final response = await AuthService().logout();
+    if(response.statusCode == 200){
+      await storage.deleteAll();
+      _isLoggedIn = false;
+      _user = null;
+      notifyListeners();
+    }
   }
 
   Future<void> isUserLoggedIn() async{

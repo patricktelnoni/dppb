@@ -1,7 +1,7 @@
 import 'package:dppb/main.dart';
 import 'package:dppb/view/auth/login_form.dart';
 import 'package:dppb/view/home/dashboard.dart';
-import 'package:dppb/view/posts/post_list.dart';
+import 'package:dppb/view/content/content_list.dart';
 import 'package:dppb/viewmodel/auth_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -35,7 +35,7 @@ final router = GoRouter(
           routes: [
             GoRoute(
               path: '/post',
-              builder: (context, state) => const PostList(),
+              builder: (context, state) => const ContentList(),
             ),
           ],
         ),

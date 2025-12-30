@@ -3,21 +3,21 @@ import 'package:dppb/view/comment/comment_list.dart';
 import 'package:dppb/viewmodel/auth_view_model.dart';
 import 'package:dppb/widget/star_button.dart';
 import 'package:flutter/material.dart';
-import 'package:dppb/service/post_http.dart';
+import 'package:dppb/viewmodel/content_view_model.dart';
 import 'package:dppb/service/likes_http.dart';
 import 'package:dppb/transition/item_transition.dart';
 import 'package:dppb/view/comment/comment_form.dart';
 import 'package:provider/provider.dart';
 
 
-class PostList extends StatefulWidget {
-  const PostList({super.key});
+class ContentList extends StatefulWidget {
+  const ContentList({super.key});
 
   @override
-  State<PostList> createState() => _PostListState();
+  State<ContentList> createState() => _ContentListState();
 }
 
-class _PostListState extends State<PostList> {
+class _ContentListState extends State<ContentList> {
   List<Content> posts = [];
   late AnimationController animationController;
   late Animation<double> animation;
@@ -32,7 +32,7 @@ class _PostListState extends State<PostList> {
       body: Consumer<AuthViewModel>(
           builder: (context, authVm, child) {
             return FutureBuilder(
-                future: getPostList(),
+                future: ContentViewModel().fetchPosts(),
                 builder: (context, snapshot){
                   posts = snapshot.hasData ? snapshot.data! : [];
                   return ListView.builder(
@@ -40,7 +40,7 @@ class _PostListState extends State<PostList> {
                       itemCount: posts.length,
                       itemBuilder: (context, index){
                         return Card(
-                          margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                            margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
                           elevation: 2,
                           shadowColor: Colors.black12,
                           shape: RoundedRectangleBorder(

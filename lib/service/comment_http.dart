@@ -28,7 +28,7 @@ Future<int> postComment(int postId, String comment) async{
 Future<http.Response> getCommentList(int postId) async {
   final token = await storage.read(key: 'access_token');
 
-  final url  = "https://palugada.me/api/posts/$postId/comments"; // Removed trailing slash
+  final url  = "https://palugada.me/api/content/$postId/comments"; // Removed trailing slash
   
   Map<String, String> headers = {
       'Accept': 'application/json',

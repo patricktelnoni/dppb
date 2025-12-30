@@ -1,5 +1,5 @@
 import 'package:dppb/view/comment/comment_list.dart';
-import 'package:dppb/view/posts/post_list.dart';
+import 'package:dppb/view/content/content_list.dart';
 import 'package:dppb/view/products/get_data_http.dart';
 import 'package:go_router/go_router.dart';
 import 'package:dppb/main.dart';
@@ -36,9 +36,9 @@ final List<GoRoute> routes = [
       },
     ),
     GoRoute(
-      name: 'posts',
+      name: 'content',
       // The path includes a parameter
-      path: '/posts',
-      builder: (context, state) => const PostList(),
+      path: '/content',
+      builder: (context, state) => const ContentList(),
     ),
   ];
